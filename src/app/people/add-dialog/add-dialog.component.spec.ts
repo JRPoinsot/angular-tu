@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddDialogComponent } from './add-dialog.component';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {MatDialogModule, MatDialogRef} from '@angular/material';
 
 describe('AddDialogComponent', () => {
   let component: AddDialogComponent;
@@ -8,7 +10,10 @@ describe('AddDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AddDialogComponent]
+        imports: [MatDialogModule],
+        declarations: [AddDialogComponent],
+        providers: [{provide: MatDialogRef, useValue: {}}],
+        schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   }));
 
