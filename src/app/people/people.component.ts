@@ -48,7 +48,6 @@ export class PeopleComponent implements OnInit, OnDestroy {
         .pipe(mergeMap(() => this.peopleService.fetch()))
         .subscribe((people: any[]) => {
           this.people = people;
-          this.hideDialog();
         });
   }
 
@@ -65,11 +64,6 @@ export class PeopleComponent implements OnInit, OnDestroy {
         this.add(person);
       }
     });
-  }
-
-  hideDialog() {
-    this.dialogStatus = 'inactive';
-    this.addDialog.close();
   }
 
   trackByFn(index: number, item: Person) {

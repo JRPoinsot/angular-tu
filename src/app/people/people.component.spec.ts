@@ -4,14 +4,17 @@ import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {PeopleService} from '../shared/people.service';
 import {PeopleComponent} from './people.component';
-import {MatDialogModule} from '@angular/material';
+import {MatDialog, MatDialogModule} from '@angular/material';
 import {MockNgRedux, NgReduxTestingModule} from '@angular-redux/store/testing';
 import {By} from '@angular/platform-browser';
 import {ActionsService} from '../core/flux/actions.service';
 import Spy = jasmine.Spy;
 import {Person} from '../model/person.model';
-import {Subject} from 'rxjs';
+import {Observable, of, Subject} from 'rxjs';
 import {CardComponent} from '../shared/card';
+
+
+
 
 const fakePeopleList = [
     {
@@ -77,6 +80,20 @@ const fakePeopleList = [
         managerId: '5763cd4d3b57c672861bfa1f'
     }
 ];
+
+export class MdDialogMock {
+    // When the component calls this.dialog.open(...) we'll return an object
+    // with an afterClosed method that allows to subscribe to the dialog result observable.
+
+    afterCloseSubject = new Subject();
+
+    open() {
+        return {
+            afterClosed: () => this.afterCloseSubject.asObservable()
+        };
+    }
+}
+
 describe('Test People Component', () => {
 
   let component: PeopleComponent;
@@ -91,6 +108,7 @@ describe('Test People Component', () => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule, MatDialogModule, NgReduxTestingModule],
       declarations: [PeopleComponent, CardComponent],
+        providers: [ {provide: MatDialog, useClass: MdDialogMock}],
       schemas: [ NO_ERRORS_SCHEMA ]
     }).compileComponents().then( () => {
 
@@ -138,13 +156,19 @@ describe('Test People Component', () => {
   });
 
   it('should display addDialog component when clicking add button', () => {
+      const dialog = TestBed.get(MatDialog);
+
+      const spyOpendialog = spyOn(dialog, 'open');
+      // const spyCloseDialog = spyOn(component., 'close');
       fixture.detectChanges(); // ngOnInit
+      expect(component.dialogStatus).toEqual('inactive');
       let button = debugElement.query(By.css('button'));
       button.triggerEventHandler('click', null);
+      expect(component.dialogStatus).toEqual('active');
       fixture.detectChanges(); // update view
       button = debugElement.query(By.css('button'));
       expect(button).toBeFalsy();
-     // expect(debugElement.query(By.css('cdk-overlay-container'))).toBeTruthy();
+      expect(spyOpendialog).toHaveBeenCalled();
 
   });
 });
