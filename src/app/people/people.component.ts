@@ -19,7 +19,7 @@ export class PeopleComponent implements OnInit, OnDestroy {
   public people: Array<Person> = [];
   public dialogStatus = 'inactive';
 
-  @select()
+  @select('people')
   private readonly people$: Observable<Array<Person>>;
   private peopleSubscription!: Subscription;
   private addDialog: MatDialogRef<AddDialogComponent>;
