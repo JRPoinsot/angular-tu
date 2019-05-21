@@ -36,4 +36,12 @@ describe('Test People Component', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should call reduxAction fetchAll onInit then display people', () => {
+  });
+
+  it('should call reduxAction delete when card raises personDelete event', () => {
+  });
+
+  it('should display addDialog component when clicking add button', () => {
+  });
 });
