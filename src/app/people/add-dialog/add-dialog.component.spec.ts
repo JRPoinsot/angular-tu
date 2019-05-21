@@ -1,10 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { AddDialogComponent } from './add-dialog.component';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {AddDialogComponent} from './add-dialog.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {MatDialogModule, MatDialogRef} from '@angular/material';
 
-describe('AddDialogComponent', () => {
+describe('Test AddDialog Component', () => {
   let component: AddDialogComponent;
   let fixture: ComponentFixture<AddDialogComponent>;
 
