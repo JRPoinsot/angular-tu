@@ -7,7 +7,7 @@ import {By} from '@angular/platform-browser';
 import {PeopleService} from '../shared/people.service';
 import {of} from 'rxjs';
 
-fdescribe('Test Home Component', () => {
+describe('Test Home Component', () => {
 
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
