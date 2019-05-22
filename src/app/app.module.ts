@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
 // MATERIAL DESIGN MODULES
 import {
   MatToolbarModule,
@@ -50,7 +50,7 @@ import { FluxStandardAction } from 'flux-standard-action';
     MatDialogModule,
     HttpClientModule,
     APP_ROUTES,
-    FormsModule,
+    ReactiveFormsModule,
     NgReduxModule
   ],
   declarations: [PeopleAppComponent, HomeComponent, PeopleComponent, CardComponent, AddDialogComponent, FormComponent, UpdateComponent],
