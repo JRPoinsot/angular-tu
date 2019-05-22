@@ -1,4 +1,4 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {HomeComponent} from './home.component';
 import {DebugElement} from '@angular/core/src/debug/debug_node';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
@@ -6,6 +6,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {By} from '@angular/platform-browser';
 import {PeopleService} from '../shared/people.service';
 import {of} from 'rxjs';
+import {asyncData} from '../../test';
 
 fdescribe('Test Home Component', () => {
 
@@ -52,10 +53,21 @@ fdescribe('Test Home Component', () => {
     expect(fetchRandomSpy).toHaveBeenCalledTimes(2);
   });
 
+    it('should call fetch random person on Init ASYNC', async(() => {
+        component.person = null;
+        const fetchRandomSpy = spyOn(peopleService, 'fetchRandom').and.returnValue(asyncData({}));
+        fixture.detectChanges(); // ngOnInit
+        fixture.whenStable().then(() => {
+            fixture.detectChanges(); // updateView after async code is executed
+            expect(fetchRandomSpy).toHaveBeenCalled();
+            expect(debugElement.query(By.css('pwa-card'))).toBeTruthy();
+        });
+    }));
+
   it('should call delete when card raise a personDelete event', () => {
     component.person.id = 'fakeId';
     const deleteSpy = spyOn(peopleService, 'delete').and.returnValue(of({}));
-    fixture.detectChanges(); // ngOnInit
+    fixture.detectChanges(); // ngOnInita
     debugElement.query(By.css('pwa-card')).triggerEventHandler('personDelete', null);
     expect(deleteSpy).toHaveBeenCalledWith(component.person.id);
   });
