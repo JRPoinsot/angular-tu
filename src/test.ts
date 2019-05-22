@@ -8,6 +8,7 @@ import 'zone.js/dist/async-test';
 import 'zone.js/dist/fake-async-test';
 import { getTestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
+import {defer} from 'rxjs';
 
 // Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.
 declare var __karma__: any;
@@ -24,3 +25,15 @@ const context = require.context('./', true, /\.spec\.ts$/);
 context.keys().map(context);
 // Finally, start Karma to run the tests.
 __karma__.start();
+
+/** Create async observable that emits-once and completes
+ *  after a JS engine turn */
+export function asyncData<T>(data: T) {
+    return defer(() => Promise.resolve(data));
+}
+
+/** Create async observable error that errors
+ *  after a JS engine turn */
+export function asyncError<T>(errorObject: any) {
+    return defer(() => Promise.reject(errorObject));
+}
