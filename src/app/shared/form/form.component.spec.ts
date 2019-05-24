@@ -10,6 +10,7 @@ import {
     MatInputModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { By } from '@angular/platform-browser';
 
 fdescribe('Test Form Component', () => {
 
@@ -38,13 +39,22 @@ fdescribe('Test Form Component', () => {
         fixture.detectChanges();
         expect(component).toBeTruthy();
         expect(component.form.valid).toBeFalsy();
+        const submitButtonDe = debugElement.query(By.css('button[type=submit]'));
+        expect(submitButtonDe.nativeElement.disabled).toBeTruthy();
     });
 
-    it('form firstname should be valid', () => {
+    it('form firstname should be valid when valued with +2 characters', () => {
         fixture.detectChanges();
         expect(component.form.controls.firstname.valid).toBeFalsy();
-        component.form.controls['firstname'].setValue('toto');
+        component.form.controls.firstname.setValue('t');
+        expect(component.form.controls.firstname.valid).toBeFalsy();
+        console.error(component.form.controls.firstname.errors);
+        // expect(component.form.controls.firstname.errors).toEqual()
+        component.form.controls.firstname.setValue('toto');
         expect(component.form.controls.firstname.valid).toBeTruthy( 'le prenom doit etre valide avec la valeur toto');
+    });
+
+    it('submit button should be enable when form is valid', () => {
     });
 
 });
