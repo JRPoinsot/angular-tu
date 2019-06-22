@@ -94,7 +94,7 @@ export class MdDialogMock {
     }
 }
 
-fdescribe('Test People Component', () => {
+describe('Test People Component', () => {
 
   let component: PeopleComponent;
   let fixture: ComponentFixture<PeopleComponent>;
