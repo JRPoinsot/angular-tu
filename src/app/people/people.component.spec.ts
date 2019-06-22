@@ -157,9 +157,7 @@ describe('Test People Component', () => {
 
   it('should display addDialog component when clicking add button', () => {
       const dialog = TestBed.get(MatDialog);
-
       const spyOpendialog = spyOn(dialog, 'open');
-      // const spyCloseDialog = spyOn(component., 'close');
       fixture.detectChanges(); // ngOnInit
       expect(component.dialogStatus).toEqual('inactive');
       let button = debugElement.query(By.css('button'));
