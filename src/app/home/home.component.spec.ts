@@ -1,8 +1,10 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {HomeComponent} from './home.component';
 import {DebugElement} from '@angular/core/src/debug/debug_node';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
+import {asyncData} from '../../test';
+import {By} from '@angular/platform-browser';
 
 fdescribe('Test Home Component', () => {
 
@@ -28,9 +30,12 @@ fdescribe('Test Home Component', () => {
   it('should not display card if person is null', () => {
   });
 
-  it('should call fetch other person when click on autorenew', () => {
+  it('should call fetchRandom when click on autorenew', () => {
   });
 
-  it('should call delete when card raise a personDelete event', () => {
+  it('should call delete when card triggers a personDelete event', () => {
   });
+
+  it('should call fetch random person on Init (async)', async(() => {
+  }));
 });
