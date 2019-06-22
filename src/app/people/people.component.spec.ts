@@ -138,12 +138,8 @@ describe('Test People Component', () => {
       expect(dispatchSpy).toHaveBeenCalledWith({
           type: ActionsService.FETCH_ALL, payload: null, error: false, meta: null
       });
-  });
-
-  it('should display people cards after onInit', () => {
-    fixture.detectChanges(); // ngOnInit
-    const pwaCardsDe = debugElement.queryAll(By.css('pwa-card'));
-    expect(pwaCardsDe.length).toEqual(2);
+      const pwaCardsDe = debugElement.queryAll(By.css('pwa-card'));
+      expect(pwaCardsDe.length).toEqual(2);
   });
 
   it('should call reduxAction delete when card raises personDelete event', () => {
