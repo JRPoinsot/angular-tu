@@ -42,7 +42,7 @@ fdescribe('Test Home Component', () => {
     expect(debugElement.query(By.css('pwa-card'))).toBeTruthy();
   });
 
-  it('should call fetch other person when click on autorenew', () => {
+  it('should call fetchRandom when click on autorenew', () => {
     const fetchRandomSpy = spyOn(peopleService, 'fetchRandom').and.returnValue(of({}));
     fixture.detectChanges(); // ngOnInit
     expect(fetchRandomSpy).toHaveBeenCalled();
@@ -53,22 +53,22 @@ fdescribe('Test Home Component', () => {
     expect(fetchRandomSpy).toHaveBeenCalledTimes(2);
   });
 
-    it('should call fetch random person on Init ASYNC', async(() => {
-        component.person = null;
-        const fetchRandomSpy = spyOn(peopleService, 'fetchRandom').and.returnValue(asyncData({}));
-        fixture.detectChanges(); // ngOnInit
-        fixture.whenStable().then(() => {
-            fixture.detectChanges(); // updateView after async code is executed
-            expect(fetchRandomSpy).toHaveBeenCalled();
-            expect(debugElement.query(By.css('pwa-card'))).toBeTruthy();
-        });
-    }));
-
-  it('should call delete when card raise a personDelete event', () => {
+  it('should call delete when card triggers a personDelete event', () => {
     component.person.id = 'fakeId';
     const deleteSpy = spyOn(peopleService, 'delete').and.returnValue(of({}));
     fixture.detectChanges(); // ngOnInita
     debugElement.query(By.css('pwa-card')).triggerEventHandler('personDelete', null);
     expect(deleteSpy).toHaveBeenCalledWith(component.person.id);
   });
+
+  it('should call fetch random person on Init (async)', async(() => {
+      component.person = null;
+      const fetchRandomSpy = spyOn(peopleService, 'fetchRandom').and.returnValue(asyncData({}));
+      fixture.detectChanges(); // ngOnInit
+      fixture.whenStable().then(() => {
+          fixture.detectChanges(); // updateView after async code is executed
+          expect(fetchRandomSpy).toHaveBeenCalled();
+          expect(debugElement.query(By.css('pwa-card'))).toBeTruthy();
+      });
+  }));
 });
