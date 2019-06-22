@@ -77,7 +77,13 @@ fdescribe('Test Form Component', () => {
     it('submit button should be enable when form is valid', () => {
     });
 
-    it('mode update when model is present', () => {
+    it('should be update mode when model is present', () => {
+    });
+
+    it('should trigger cancelEvent when click on cancel', () => {
+    });
+
+    it('should trigger submitEvent with new values when click on save', () => {
     });
 
 });
