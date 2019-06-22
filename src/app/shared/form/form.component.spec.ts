@@ -117,11 +117,17 @@ fdescribe('Test Form Component', () => {
         expect(submitButtonDe.nativeElement.disabled).toBeFalsy();
     });
 
-    it('mode update when model is present', () => {
+    it('should be "update mode" when model is present', () => {
         hostComponent.setPerson(fakePerson);
         hostFixture.detectChanges(); // ngOnInit
         expect(component.form.valid).toBeTruthy('Le formulaire doit être valide !');
         expect(debugElement.query(By.css('mat-card-title')).nativeElement.textContent).toEqual('Update Leanne Woodard');
+    });
+
+    it('should trigger cancelEvent when click on cancel', () => {
+    });
+
+    it('should trigger submitEvent with new values when click on save', () => {
     });
 
 });
