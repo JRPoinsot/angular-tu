@@ -4,7 +4,7 @@ import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {PeopleService} from '../shared/people.service';
 import {PeopleComponent} from './people.component';
-import {MatDialog, MatDialogModule} from '@angular/material';
+import {MatCardModule, MatDialog, MatDialogModule} from '@angular/material';
 import {MockNgRedux, NgReduxTestingModule} from '@angular-redux/store/testing';
 import {By} from '@angular/platform-browser';
 import {ActionsService} from '../core/flux/actions.service';
@@ -106,7 +106,7 @@ describe('Test People Component', () => {
   beforeEach(async(() => {
     // async because of NgReduxTestingModule has asynchronous code
     TestBed.configureTestingModule({
-      imports: [HttpClientModule, MatDialogModule, NgReduxTestingModule],
+      imports: [HttpClientModule, MatDialogModule, MatCardModule, NgReduxTestingModule],
       declarations: [PeopleComponent, CardComponent],
         providers: [ {provide: MatDialog, useClass: MdDialogMock}],
       schemas: [ NO_ERRORS_SCHEMA ]
@@ -133,17 +133,13 @@ describe('Test People Component', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call reduxAction fetchAll onInit', () => {
+  it('should call reduxAction fetchAll onInit then display people', () => {
       fixture.detectChanges(); // ngOnInit
       expect(dispatchSpy).toHaveBeenCalledWith({
           type: ActionsService.FETCH_ALL, payload: null, error: false, meta: null
       });
-  });
-
-  it('should display people cards after onInit', () => {
-    fixture.detectChanges(); // ngOnInit
-    const pwaCardsDe = debugElement.queryAll(By.css('pwa-card'));
-    expect(pwaCardsDe.length).toEqual(2);
+      const pwaCardsDe = debugElement.queryAll(By.css('pwa-card'));
+      expect(pwaCardsDe.length).toEqual(2);
   });
 
   it('should call reduxAction delete when card raises personDelete event', () => {
@@ -157,9 +153,7 @@ describe('Test People Component', () => {
 
   it('should display addDialog component when clicking add button', () => {
       const dialog = TestBed.get(MatDialog);
-
       const spyOpendialog = spyOn(dialog, 'open');
-      // const spyCloseDialog = spyOn(component., 'close');
       fixture.detectChanges(); // ngOnInit
       expect(component.dialogStatus).toEqual('inactive');
       let button = debugElement.query(By.css('button'));

@@ -35,7 +35,7 @@ export class FormComponent implements OnInit, OnChanges {
     /**
      * Function to handle component update
      *
-     * @param record
+     * @param record model
      */
     ngOnChanges(record) {
         if (record.model && record.model.currentValue) {
@@ -62,9 +62,6 @@ export class FormComponent implements OnInit, OnChanges {
     /**
      * Function to build our form
      *
-     * @returns {FormGroup}
-     *
-     * @private
      */
     private _buildForm(): FormGroup {
         return new FormGroup({
