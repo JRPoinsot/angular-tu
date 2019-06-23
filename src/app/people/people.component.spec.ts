@@ -10,11 +10,8 @@ import {By} from '@angular/platform-browser';
 import {ActionsService} from '../core/flux/actions.service';
 import Spy = jasmine.Spy;
 import {Person} from '../model/person.model';
-import {Observable, of, Subject} from 'rxjs';
+import {Subject} from 'rxjs';
 import {CardComponent} from '../shared/card';
-
-
-
 
 const fakePeopleList = [
     {
@@ -81,19 +78,6 @@ const fakePeopleList = [
     }
 ];
 
-export class MdDialogMock {
-    // When the component calls this.dialog.open(...) we'll return an object
-    // with an afterClosed method that allows to subscribe to the dialog result observable.
-
-    afterCloseSubject = new Subject();
-
-    open() {
-        return {
-            afterClosed: () => this.afterCloseSubject.asObservable()
-        };
-    }
-}
-
 fdescribe('Test People Component', () => {
 
   let component: PeopleComponent;
@@ -101,14 +85,19 @@ fdescribe('Test People Component', () => {
   let debugElement: DebugElement;
   let peopleService: PeopleService;
   let dispatchSpy: Spy;
+  let spyOpenDialog: Spy;
+  let addDialogMock: any;
   let peopleStub: Subject<Array<Person>>;
+  let matDialog: MatDialog;
+
+  const afterCloseSubject = new Subject();
 
   beforeEach(async(() => {
     // async because of NgReduxTestingModule has asynchronous code
     TestBed.configureTestingModule({
       imports: [HttpClientModule, MatDialogModule, MatCardModule, NgReduxTestingModule],
       declarations: [PeopleComponent, CardComponent],
-        providers: [ {provide: MatDialog, useClass: MdDialogMock}],
+        providers: [MatDialog],
       schemas: [ NO_ERRORS_SCHEMA ]
     }).compileComponents().then( () => {
 
@@ -125,6 +114,12 @@ fdescribe('Test People Component', () => {
         peopleStub = MockNgRedux.getSelectorStub('people');
         peopleStub.next(fakePeopleList);
         peopleStub.complete();
+
+        matDialog = TestBed.get(MatDialog);
+        addDialogMock = {
+            afterClosed: () => afterCloseSubject.asObservable()
+        };
+        spyOpenDialog = spyOn(matDialog, 'open').and.returnValue(addDialogMock);
     });
   }));
 
@@ -152,8 +147,6 @@ fdescribe('Test People Component', () => {
   });
 
   it('should display addDialog component when clicking add button', () => {
-      const dialog = TestBed.get(MatDialog);
-      const spyOpendialog = spyOn(dialog, 'open');
       fixture.detectChanges(); // ngOnInit
       expect(component.dialogStatus).toEqual('inactive');
       let button = debugElement.query(By.css('button'));
@@ -162,7 +155,11 @@ fdescribe('Test People Component', () => {
       fixture.detectChanges(); // update view
       button = debugElement.query(By.css('button'));
       expect(button).toBeFalsy();
-      expect(spyOpendialog).toHaveBeenCalled();
-
+      expect(spyOpenDialog).toHaveBeenCalled();
+      afterCloseSubject.next(null); // cancel
+      expect(component.dialogStatus).toEqual('inactive');
+      fixture.detectChanges();
+      button = debugElement.query(By.css('button'));
+      expect(button).toBeTruthy();
   });
 });
