@@ -5,9 +5,9 @@ export class CustomValidators {
     /**
      * Function to control email with custom validator
      *
-     * @param control
+     * @param control the form control
      *
-     * @returns {{customEmail: boolean}}
+     * @returns customEmail: boolean => vrai si la value de l'email est conform, false sinon
      */
     static customEmail(control: FormControl) {
         // email regex
