@@ -80,19 +80,19 @@ const fakePeopleList = [
 
 fdescribe('Test People Component', () => {
 
-  let component: PeopleComponent;
-  let fixture: ComponentFixture<PeopleComponent>;
-  let debugElement: DebugElement;
-  let peopleService: PeopleService;
-  let dispatchSpy: Spy;
-  let spyOpenDialog: Spy;
-  let addDialogMock: any;
-  let peopleStub: Subject<Array<Person>>;
-  let matDialog: MatDialog;
+    let component: PeopleComponent;
+    let fixture: ComponentFixture<PeopleComponent>;
+    let debugElement: DebugElement;
+    let peopleService: PeopleService;
+    let dispatchSpy: Spy;
+    let spyOpenDialog: Spy;
+    let addDialogMock: any;
+    let peopleStub: Subject<Array<Person>>;
+    let matDialog: MatDialog;
 
-  const afterCloseSubject = new Subject();
+    const afterCloseSubject = new Subject();
 
-  beforeEach(async(() => {
+    beforeEach(async(() => {
     // async because of NgReduxTestingModule has asynchronous code
     TestBed.configureTestingModule({
       imports: [HttpClientModule, MatDialogModule, MatCardModule, NgReduxTestingModule],
@@ -121,45 +121,48 @@ fdescribe('Test People Component', () => {
         };
         spyOpenDialog = spyOn(matDialog, 'open').and.returnValue(addDialogMock);
     });
-  }));
+    }));
 
-  it('should be created', () => {
-    fixture.detectChanges(); // ngOnInit
-    expect(component).toBeTruthy();
-  });
+    it('should be created', () => {
+        fixture.detectChanges(); // ngOnInit
+        expect(component).toBeTruthy();
+    });
 
-  it('should call reduxAction fetchAll onInit then display people', () => {
-      fixture.detectChanges(); // ngOnInit
-      expect(dispatchSpy).toHaveBeenCalledWith({
+    it('should call reduxAction fetchAll onInit then display people', () => {
+        fixture.detectChanges(); // ngOnInit
+        expect(dispatchSpy).toHaveBeenCalledWith({
           type: ActionsService.FETCH_ALL, payload: null, error: false, meta: null
-      });
-      const pwaCardsDe = debugElement.queryAll(By.css('pwa-card'));
-      expect(pwaCardsDe.length).toEqual(2);
-  });
+        });
+        const pwaCardsDe = debugElement.queryAll(By.css('pwa-card'));
+        expect(pwaCardsDe.length).toEqual(2);
+    });
 
-  it('should call reduxAction delete when card raises personDelete event', () => {
-      fixture.detectChanges(); // ngOnInit
-      const pwaCardsDe = debugElement.queryAll(By.css('pwa-card'))[0];
-      pwaCardsDe.triggerEventHandler('personDelete', fakePeopleList[0]);
-      expect(dispatchSpy).toHaveBeenCalledWith({
+    it('should call reduxAction delete when card raises personDelete event', () => {
+        fixture.detectChanges(); // ngOnInit
+        const pwaCardsDe = debugElement.queryAll(By.css('pwa-card'))[0];
+        pwaCardsDe.triggerEventHandler('personDelete', fakePeopleList[0]);
+        expect(dispatchSpy).toHaveBeenCalledWith({
           type: ActionsService.DELETE_PERSON, payload: '5763cd4d9d2a4f259b53c901', error: false, meta: null
-      });
-  });
+        });
+    });
 
-  it('should display addDialog component when clicking add button', () => {
-      fixture.detectChanges(); // ngOnInit
-      expect(component.dialogStatus).toEqual('inactive');
-      let button = debugElement.query(By.css('button'));
-      button.triggerEventHandler('click', null);
-      expect(component.dialogStatus).toEqual('active');
-      fixture.detectChanges(); // update view
-      button = debugElement.query(By.css('button'));
-      expect(button).toBeFalsy();
-      expect(spyOpenDialog).toHaveBeenCalled();
-      afterCloseSubject.next(null); // cancel
-      expect(component.dialogStatus).toEqual('inactive');
-      fixture.detectChanges();
-      button = debugElement.query(By.css('button'));
-      expect(button).toBeTruthy();
-  });
+    it('should display addDialog component when clicking add button', () => {
+        fixture.detectChanges(); // ngOnInit
+        expect(component.dialogStatus).toEqual('inactive');
+        let button = debugElement.query(By.css('button'));
+        button.triggerEventHandler('click', null);
+        expect(component.dialogStatus).toEqual('active');
+        fixture.detectChanges(); // update view
+        button = debugElement.query(By.css('button'));
+        expect(button).toBeFalsy();
+        expect(spyOpenDialog).toHaveBeenCalled();
+        afterCloseSubject.next(null); // cancel
+        expect(component.dialogStatus).toEqual('inactive');
+        fixture.detectChanges();
+        button = debugElement.query(By.css('button'));
+        expect(button).toBeTruthy();
+    });
+
+    it('should create person when addDialog is closing with payload', () => {
+    });
 });
