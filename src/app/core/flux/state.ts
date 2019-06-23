@@ -10,4 +10,5 @@ export const INITIAL_STATE: IAppState = {
   userName: 'Paul',
   error: false,
   people: []
-}
+};
+

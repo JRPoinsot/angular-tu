@@ -23,7 +23,7 @@ export class CardComponent implements OnInit {
   /**
    * Function to emit event to delete current person
    *
-   * @param person
+   * @param person the person to delete
    */
   delete(person: Person) {
     this.delete$.emit(person);
