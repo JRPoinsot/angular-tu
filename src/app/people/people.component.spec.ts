@@ -99,8 +99,10 @@ fdescribe('Test People Component', () => {
       declarations: [PeopleComponent, CardComponent],
         providers: [MatDialog],
       schemas: [ NO_ERRORS_SCHEMA ]
-    }).compileComponents().then( () => {
+    }).compileComponents();
+    }));
 
+    beforeEach(() => {
         // init test variables
         fixture = TestBed.createComponent(PeopleComponent);
         component = fixture.componentInstance;
@@ -121,7 +123,6 @@ fdescribe('Test People Component', () => {
         };
         spyOpenDialog = spyOn(matDialog, 'open').and.returnValue(addDialogMock);
     });
-    }));
 
     it('should be created', () => {
         fixture.detectChanges(); // ngOnInit
