@@ -9,12 +9,12 @@ import {MockNgRedux, NgReduxTestingModule} from '@angular-redux/store/testing';
 
 describe('Test People Component', () => {
 
-  let component: PeopleComponent;
-  let fixture: ComponentFixture<PeopleComponent>;
-  let debugElement: DebugElement;
-  let peopleService: PeopleService;
+    let component: PeopleComponent;
+    let fixture: ComponentFixture<PeopleComponent>;
+    let debugElement: DebugElement;
+    let peopleService: PeopleService;
 
-  beforeEach(async(() => {
+    beforeEach(async(() => {
     // async because of NgReduxTestingModule has asynchronous code
     TestBed.configureTestingModule({
       imports: [HttpClientModule, MatDialogModule, NgReduxTestingModule],
@@ -29,19 +29,22 @@ describe('Test People Component', () => {
         debugElement = fixture.debugElement;
         peopleService = TestBed.get(PeopleService);
     });
-  }));
+    }));
 
-  it('should be created', () => {
+    it('should be created', () => {
     fixture.detectChanges();
     expect(component).toBeTruthy();
-  });
+    });
 
-  it('should call reduxAction fetchAll onInit then display people', () => {
-  });
+    it('should call reduxAction fetchAll onInit then display people', () => {
+    });
 
-  it('should call reduxAction delete when card raises personDelete event', () => {
-  });
+    it('should call reduxAction delete when card raises personDelete event', () => {
+    });
 
-  it('should display addDialog component when clicking add button', () => {
-  });
+    it('should display addDialog component when clicking add button', () => {
+    });
+
+    it('should create person when addDialog is closing with payload', () => {
+    });
 });
