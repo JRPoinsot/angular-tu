@@ -6,7 +6,7 @@ describe('Test People Service', () => {
   beforeEach(() => TestBed.configureTestingModule({imports: [HttpClientModule]}));
 
   it('should be created', () => {
-    const service: PeopleService = TestBed.get(PeopleService);
+    const service: PeopleService = TestBed.inject(PeopleService);
     expect(service).toBeTruthy();
   });
 });
