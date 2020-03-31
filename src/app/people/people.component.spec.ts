@@ -1,10 +1,8 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {DebugElement} from '@angular/core/src/debug/debug_node';
-import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {DebugElement, NO_ERRORS_SCHEMA} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {PeopleService} from '../shared/people.service';
 import {PeopleComponent} from './people.component';
-import {MatCardModule, MatDialog, MatDialogModule} from '@angular/material';
 import {MockNgRedux, NgReduxTestingModule} from '@angular-redux/store/testing';
 import {By} from '@angular/platform-browser';
 import {ActionsService} from '../core/flux/actions.service';
@@ -12,6 +10,8 @@ import Spy = jasmine.Spy;
 import {Person} from '../model/person.model';
 import {Subject} from 'rxjs';
 import {CardComponent} from '../shared/card';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {MatCardModule} from '@angular/material/card';
 
 const fakePeopleList = [
     {
