@@ -1,4 +1,4 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {Component, DebugElement, NO_ERRORS_SCHEMA, ViewChild} from '@angular/core';
 import { FormComponent } from 'app/shared/form/form.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -46,15 +46,15 @@ const fakePerson = {
     selector: `host-component`,
     template: `<pwa-form [model]="person"></pwa-form>`
 })
-class TestHostComponent {
+export class TestHostComponent {
 
-    @ViewChild(FormComponent)
-    public formComponent: FormComponent;
-    private person: Person;
+    @ViewChild(FormComponent) formComponent: FormComponent;
+    person: Person;
 
     setPerson(newInput: Person) {
         this.person = newInput;
     }
+
 }
 
 fdescribe('Test Form Component', () => {
@@ -64,7 +64,7 @@ fdescribe('Test Form Component', () => {
     let component: FormComponent;
     let debugElement: DebugElement;
 
-    beforeEach(() => {
+    beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [ BrowserAnimationsModule,
                 ReactiveFormsModule,
@@ -74,16 +74,16 @@ fdescribe('Test Form Component', () => {
                 MatCheckboxModule],
             declarations: [TestHostComponent, FormComponent],
             schemas: [ NO_ERRORS_SCHEMA ]
+        }).compileComponents().then(() => {
+            hostFixture = TestBed.createComponent(TestHostComponent);
+            hostComponent = hostFixture.componentInstance;
+            component = hostComponent.formComponent;
+            debugElement = hostFixture.debugElement;
+            hostFixture.detectChanges();
         });
-
-        hostFixture = TestBed.createComponent(TestHostComponent);
-        hostComponent = hostFixture.componentInstance;
-        component = hostFixture.componentInstance.formComponent;
-        debugElement = hostFixture.debugElement;
-    });
+    }));
 
     it('should be created with no model', () => {
-        hostFixture.detectChanges();
         expect(component).toBeTruthy();
         expect(component.form.valid).toBeFalsy();
         const submitButtonDe = debugElement.query(By.css('button[type=submit]'));
@@ -91,7 +91,6 @@ fdescribe('Test Form Component', () => {
     });
 
     it('form firstname should be valid when valued with +2 characters', () => {
-        hostFixture.detectChanges();
         expect(component.form.controls.firstname.valid).toBeFalsy();
         component.form.controls.firstname.setValue('t');
         expect(component.form.controls.firstname.valid).toBeFalsy();
