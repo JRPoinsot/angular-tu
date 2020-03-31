@@ -1,15 +1,12 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {DebugElement} from '@angular/core/src/debug/debug_node';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import {DebugElement, NO_ERRORS_SCHEMA} from '@angular/core';
 import { FormComponent } from 'app/shared/form/form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import {
-    MatButtonModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatInputModule
-} from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 const fakePerson = {
     id: '5763cd4d9d2a4f259b53c901',
