@@ -114,13 +114,13 @@ fdescribe('Test People Component', () => {
             peopleStub.next(fakePeopleList);
             peopleStub.complete();
 
-            matDialog = TestBed.get(MatDialog);
+            matDialog = TestBed.inject(MatDialog);
             addDialogMock = {
                 afterClosed: () => afterCloseSubject.asObservable()
             };
             spyOpenDialog = spyOn(matDialog, 'open').and.returnValue(addDialogMock);
         });
-    });
+    }));
 
     it('should be created', () => {
         fixture.detectChanges(); // ngOnInit
