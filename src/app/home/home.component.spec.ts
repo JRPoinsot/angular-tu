@@ -1,10 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {HomeComponent} from './home.component';
-import {DebugElement} from '@angular/core/src/debug/debug_node';
-import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {DebugElement, NO_ERRORS_SCHEMA} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-import {asyncData} from '../../test';
-import {By} from '@angular/platform-browser';
 
 fdescribe('Test Home Component', () => {
 
