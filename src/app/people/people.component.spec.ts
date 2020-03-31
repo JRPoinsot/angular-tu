@@ -93,35 +93,33 @@ fdescribe('Test People Component', () => {
     const afterCloseSubject = new Subject();
 
     beforeEach(async(() => {
-    // async because of NgReduxTestingModule has asynchronous code
-    TestBed.configureTestingModule({
-      imports: [HttpClientModule, MatDialogModule, MatCardModule, NgReduxTestingModule],
-      declarations: [PeopleComponent, CardComponent],
-        providers: [MatDialog],
-      schemas: [ NO_ERRORS_SCHEMA ]
-    }).compileComponents();
-    }));
+        // async because of NgReduxTestingModule has asynchronous code
+        TestBed.configureTestingModule({
+            imports: [HttpClientModule, MatDialogModule, MatCardModule, NgReduxTestingModule],
+            declarations: [PeopleComponent, CardComponent],
+            providers: [MatDialog],
+            schemas: [NO_ERRORS_SCHEMA]
+        }).compileComponents().then(() => {
+            // init test variables
+            fixture = TestBed.createComponent(PeopleComponent);
+            component = fixture.componentInstance;
+            debugElement = fixture.debugElement;
+            peopleService = TestBed.inject(PeopleService);
 
-    beforeEach(() => {
-        // init test variables
-        fixture = TestBed.createComponent(PeopleComponent);
-        component = fixture.componentInstance;
-        debugElement = fixture.debugElement;
-        peopleService = TestBed.get(PeopleService);
+            // MockNgRedux connects to all @select decorators
+            MockNgRedux.reset();
 
-        // MockNgRedux connects to all @select decorators
-        MockNgRedux.reset();
+            dispatchSpy = spyOn(MockNgRedux.getInstance(), 'dispatch');
+            peopleStub = MockNgRedux.getSelectorStub('people');
+            peopleStub.next(fakePeopleList);
+            peopleStub.complete();
 
-        dispatchSpy = spyOn(MockNgRedux.getInstance(), 'dispatch');
-        peopleStub = MockNgRedux.getSelectorStub('people');
-        peopleStub.next(fakePeopleList);
-        peopleStub.complete();
-
-        matDialog = TestBed.get(MatDialog);
-        addDialogMock = {
-            afterClosed: () => afterCloseSubject.asObservable()
-        };
-        spyOpenDialog = spyOn(matDialog, 'open').and.returnValue(addDialogMock);
+            matDialog = TestBed.get(MatDialog);
+            addDialogMock = {
+                afterClosed: () => afterCloseSubject.asObservable()
+            };
+            spyOpenDialog = spyOn(matDialog, 'open').and.returnValue(addDialogMock);
+        });
     });
 
     it('should be created', () => {
