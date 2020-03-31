@@ -1,7 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {HomeComponent} from './home.component';
-import {DebugElement} from '@angular/core/src/debug/debug_node';
-import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {DebugElement, NO_ERRORS_SCHEMA} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {By} from '@angular/platform-browser';
 import {PeopleService} from '../shared/people.service';
@@ -25,7 +24,7 @@ describe('Test Home Component', () => {
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
     debugElement = fixture.debugElement;
-    peopleService = TestBed.get(PeopleService);
+    peopleService = TestBed.inject(PeopleService);
   });
 
   it('should be created', () => {
