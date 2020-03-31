@@ -76,10 +76,10 @@ fdescribe('Test Form Component', () => {
             schemas: [ NO_ERRORS_SCHEMA ]
         }).compileComponents().then(() => {
             hostFixture = TestBed.createComponent(TestHostComponent);
+            hostFixture.detectChanges(); // ngOnInit
             hostComponent = hostFixture.componentInstance;
             component = hostComponent.formComponent;
             debugElement = hostFixture.debugElement;
-            hostFixture.detectChanges();
         });
     }));
 
@@ -102,7 +102,6 @@ fdescribe('Test Form Component', () => {
     });
 
     it('submit button should be enable when form is valid', () => {
-        hostFixture.detectChanges();
         component.form.controls.firstname.setValue('toto');
         component.form.controls.lastname.setValue('Titi');
         component.form.controls.email.setValue('titi.toto@custom.com');
@@ -115,7 +114,7 @@ fdescribe('Test Form Component', () => {
 
     it('should be "update mode" when model is present', () => {
         hostComponent.setPerson(fakePerson);
-        hostFixture.detectChanges(); // ngOnInit
+        hostFixture.detectChanges(); // change person detection
         expect(component.form.valid).toBeTruthy('Le formulaire doit être valide !');
         expect(debugElement.query(By.css('mat-card-title')).nativeElement.textContent).toEqual('Update Leanne Woodard');
     });
