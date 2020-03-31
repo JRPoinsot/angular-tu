@@ -1,11 +1,10 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {DebugElement} from '@angular/core/src/debug/debug_node';
-import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {DebugElement, NO_ERRORS_SCHEMA} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {PeopleService} from '../shared/people.service';
 import {PeopleComponent} from './people.component';
-import {MatDialogModule} from '@angular/material';
 import {MockNgRedux, NgReduxTestingModule} from '@angular-redux/store/testing';
+import {MatDialogModule} from '@angular/material/dialog';
 
 describe('Test People Component', () => {
 
