@@ -57,7 +57,7 @@ export class TestHostComponent {
 
 }
 
-fdescribe('Test Form Component', () => {
+describe('Test Form Component', () => {
 
     let hostFixture: ComponentFixture<TestHostComponent>;
     let hostComponent: TestHostComponent;
