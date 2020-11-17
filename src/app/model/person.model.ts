@@ -9,11 +9,14 @@ export interface Person {
   gender: string;
   email: string;
   skills: string[];
+  phone: string;
+  isManager: boolean;
+  manager: string;
+  managerId: string;
   geo: {
     lat: number;
     lng: number;
   };
-  phone: string;
   address: {
     street: string;
     postalCode: number;
@@ -25,7 +28,4 @@ export interface Person {
     github: string;
     linkedin: string;
   };
-  isManager: boolean;
-  manager: string;
-  managerId: string;
 }

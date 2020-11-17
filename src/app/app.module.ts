@@ -24,6 +24,7 @@ import { CardComponent } from './shared/card';
 import { AddDialogComponent } from './people/add-dialog/add-dialog.component';
 import { FormComponent } from './shared/form';
 import {UpdateComponent} from './update';
+import { CardOnPushComponent } from './shared/card/card-on-push.component';
 
 @NgModule({
   imports: [
@@ -42,7 +43,7 @@ import {UpdateComponent} from './update';
     APP_ROUTES,
     ReactiveFormsModule
   ],
-  declarations: [PeopleAppComponent, HomeComponent, PeopleComponent, CardComponent, AddDialogComponent, FormComponent, UpdateComponent],
+  declarations: [PeopleAppComponent, HomeComponent, PeopleComponent, CardComponent, CardOnPushComponent, AddDialogComponent, FormComponent, UpdateComponent],
   entryComponents: [AddDialogComponent],
   providers: [HttpClient],
   bootstrap: [PeopleAppComponent]

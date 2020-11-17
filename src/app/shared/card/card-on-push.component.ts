@@ -1,12 +1,14 @@
-import { Component, OnInit, Input, EventEmitter, Output, ElementRef, Renderer2, NgZone } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output,
+   ChangeDetectionStrategy, ElementRef, NgZone, Renderer2 } from '@angular/core';
 import {Person} from '../../model/person.model';
 
 @Component({
-  selector: 'pwa-card',
+  selector: 'pwa-card-on-push',
   templateUrl: 'card.component.html',
-  styleUrls: ['card.component.css']
+  styleUrls: ['card.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CardComponent implements OnInit {
+export class CardOnPushComponent implements OnInit {
   @Input() person: Person;
   @Output('personDelete') delete$: EventEmitter<Person>;
 
@@ -27,7 +29,8 @@ export class CardComponent implements OnInit {
   /**
    * OnInit implementation
    */
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   /**
    * Function to emit event to delete current person

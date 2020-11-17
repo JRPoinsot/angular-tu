@@ -1,6 +1,6 @@
 import { mergeMap } from 'rxjs/operators';
 
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddDialogComponent } from './add-dialog/add-dialog.component';
 import { PeopleService } from '../shared/people.service';
@@ -65,6 +65,6 @@ export class PeopleComponent implements OnInit, OnDestroy {
   }
 
   trackByFn(index: number, item: Person) {
-    return item.id; // or item.id
+    return item.id;
   }
 }
