@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import {HomeComponent} from './home.component';
 import {DebugElement, NO_ERRORS_SCHEMA} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
@@ -60,7 +60,7 @@ describe('Test Home Component', () => {
     expect(deleteSpy).toHaveBeenCalledWith(component.person.id);
   });
 
-  it('should call fetch random person on Init (async)', async(() => {
+  it('should call fetch random person on Init (async)', waitForAsync(() => {
       component.person = null;
       const fetchRandomSpy = spyOn(peopleService, 'fetchRandom').and.returnValue(asyncData({}));
       fixture.detectChanges(); // ngOnInit

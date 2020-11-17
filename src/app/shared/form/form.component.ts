@@ -73,7 +73,7 @@ export class FormComponent implements OnInit, OnChanges {
                 Validators.required, Validators.minLength(2)
             ])),
             email: new FormControl('', Validators.compose([
-                Validators.required, CustomValidators.customEmail
+                Validators.required, Validators.email
             ])),
             photo: new FormControl('https://randomuser.me/api/portraits/lego/6.jpg'),
             address: new FormGroup({

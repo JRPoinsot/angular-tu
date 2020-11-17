@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import {Component, DebugElement, NO_ERRORS_SCHEMA, ViewChild} from '@angular/core';
 import { FormComponent } from 'app/shared/form/form.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -64,7 +64,7 @@ describe('Test Form Component', () => {
     let component: FormComponent;
     let debugElement: DebugElement;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [ BrowserAnimationsModule,
                 ReactiveFormsModule,
