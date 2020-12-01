@@ -1,11 +1,43 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {HomeComponent} from './home.component';
-import {DebugElement, NO_ERRORS_SCHEMA} from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
-import {By} from '@angular/platform-browser';
-import {PeopleService} from '../shared/people.service';
-import {of} from 'rxjs';
-import {asyncData} from '../../test';
+import { HttpClientModule } from '@angular/common/http';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { of } from 'rxjs';
+import { asyncData } from '../../test';
+import { PeopleService } from '../shared/people.service';
+import { HomeComponent } from './home.component';
+
+const fakePerson = {
+  id: '5763cd4d9d2a4f259b53c901',
+  photo: 'https://randomuser.me/portraits/women/59.jpg',
+  firstname: 'Leanne',
+  lastname: 'Woodard',
+  entity: 'BIOSPAN',
+  entryDate: '27/10/2015',
+  birthDate: '02/01/1974',
+  gender: '',
+  email: 'Leanne.Woodard@BIOSPAN.com',
+  skills: ['pariatur', 'ipsum', 'laboris', 'nostrud', 'elit'],
+  geo: {
+    lat: 48.854107964410616,
+    lng: 2.2486534555789013
+  },
+  phone: '0784112248',
+  address: {
+    street: 'Narrows Avenue',
+    postalCode: 70534,
+    city: 'Boling'
+  },
+  links: {
+    twitter: 'https://twitter.com/laboris',
+    slack: 'https://slack.com/fugiat',
+    github: 'https://github.com/velit',
+    linkedin: 'https://www.linkedin.com/in/voluptate'
+  },
+  isManager: false,
+  manager: 'Erika',
+  managerId: '5763cd4d3b57c672861bfa1f'
+}
 
 fdescribe('Test Home Component', () => {
 
@@ -42,7 +74,7 @@ fdescribe('Test Home Component', () => {
   });
 
   it('should call fetchRandom when click on autorenew', () => {
-    const fetchRandomSpy = spyOn(peopleService, 'fetchRandom').and.returnValue(of({}));
+    const fetchRandomSpy = spyOn(peopleService, 'fetchRandom').and.returnValue(of(fakePerson));
     fixture.detectChanges(); // ngOnInit
     expect(fetchRandomSpy).toHaveBeenCalled();
     expect(component).toBeTruthy();
@@ -54,15 +86,15 @@ fdescribe('Test Home Component', () => {
 
   it('should call delete when card triggers a personDelete event', () => {
     component.person.id = 'fakeId';
-    const deleteSpy = spyOn(peopleService, 'delete').and.returnValue(of({}));
-    fixture.detectChanges(); // ngOnInita
+    const deleteSpy = spyOn(peopleService, 'delete').and.returnValue(of([]));
+    fixture.detectChanges(); // ngOnInit
     debugElement.query(By.css('pwa-card')).triggerEventHandler('personDelete', null);
     expect(deleteSpy).toHaveBeenCalledWith(component.person.id);
   });
 
-  it('should call fetch random person on Init (async)', async(() => {
+  it('should call fetch random person on Init (async)', waitForAsync(() => {
       component.person = null;
-      const fetchRandomSpy = spyOn(peopleService, 'fetchRandom').and.returnValue(asyncData({}));
+      const fetchRandomSpy = spyOn(peopleService, 'fetchRandom').and.returnValue(asyncData(fakePerson));
       fixture.detectChanges(); // ngOnInit
       fixture.whenStable().then(() => {
           fixture.detectChanges(); // updateView after async code is executed
