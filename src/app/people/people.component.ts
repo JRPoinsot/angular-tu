@@ -36,7 +36,7 @@ export class PeopleComponent implements OnInit, OnDestroy {
 
   delete(person: Person) {
     this.peopleService.delete(person.id).pipe(
-      mergeMap(this.peopleService.fetch)
+      mergeMap(() => this.peopleService.fetch())
     )
     .subscribe(people => this.people = people);
   }
