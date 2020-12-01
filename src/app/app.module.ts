@@ -11,7 +11,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
-import { MatRadioModule } from '@angular/material/radio';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,12 +24,6 @@ import { CardComponent } from './shared/card';
 import { AddDialogComponent } from './people/add-dialog/add-dialog.component';
 import { FormComponent } from './shared/form';
 import {UpdateComponent} from './update';
-import { NgRedux, NgReduxModule } from '@angular-redux/store';
-import { IAppState, INITIAL_STATE } from 'app/core/flux/state';
-import { rootReducer } from 'app/core/flux/reducer';
-import { RootEpicsService } from 'app/core/flux/epic.service';
-import { createEpicMiddleware } from 'redux-observable';
-import { FluxStandardAction } from 'flux-standard-action';
 
 @NgModule({
   imports: [
@@ -42,35 +35,16 @@ import { FluxStandardAction } from 'flux-standard-action';
     MatButtonModule,
     MatInputModule,
     MatCheckboxModule,
-    MatRadioModule,
     MatIconModule,
     MatListModule,
     MatDialogModule,
     HttpClientModule,
     APP_ROUTES,
-    ReactiveFormsModule,
-    NgReduxModule
+    ReactiveFormsModule
   ],
   declarations: [PeopleAppComponent, HomeComponent, PeopleComponent, CardComponent, AddDialogComponent, FormComponent, UpdateComponent],
   entryComponents: [AddDialogComponent],
   providers: [HttpClient],
   bootstrap: [PeopleAppComponent]
 })
-export class AppModule {
-  constructor(ngRedux: NgRedux<IAppState>, rootEpicsService: RootEpicsService) {
-
-    // Tell Redux about our reducers and epics. If the Redux DevTools
-    // chrome extension is available in the browser, tell Redux about
-    // it too.
-    const epicMiddleware = createEpicMiddleware<
-        FluxStandardAction<any, any, any>,
-        FluxStandardAction<any, any, any>,
-        IAppState
-        >();
-
-    ngRedux.configureStore(rootReducer, INITIAL_STATE, [epicMiddleware]);
-    epicMiddleware.run(rootEpicsService.createDeletePersonEpicMiddleware());
-    epicMiddleware.run(rootEpicsService.createFetchAllEpicMiddleware());
-
-  }
-}
+export class AppModule {}

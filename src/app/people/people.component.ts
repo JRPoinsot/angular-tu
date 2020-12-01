@@ -5,9 +5,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddDialogComponent } from './add-dialog/add-dialog.component';
 import { PeopleService } from '../shared/people.service';
 import { Person } from '../model/person.model';
-import { ActionsService } from 'app/core/flux/actions.service';
-import { select } from '@angular-redux/store';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'pwa-people',
@@ -19,20 +17,17 @@ export class PeopleComponent implements OnInit, OnDestroy {
   public people: Array<Person> = [];
   public dialogStatus = 'inactive';
 
-  @select()
-  private readonly people$: Observable<Array<Person>>;
   private peopleSubscription!: Subscription;
   private addDialog: MatDialogRef<AddDialogComponent>;
 
-  constructor(private peopleService: PeopleService, public dialog: MatDialog, private reduxActions: ActionsService) {
+  constructor(private peopleService: PeopleService, public dialog: MatDialog) {
   }
 
   /**
    * OnInit implementation
    */
   ngOnInit() {
-    this.reduxActions.fetchAll();
-    this.peopleSubscription = this.people$.subscribe(statePeople => this.people = statePeople);
+    this.peopleSubscription = this.peopleService.fetch().subscribe(people => this.people = people);
   }
 
   ngOnDestroy(): void {
@@ -40,13 +35,16 @@ export class PeopleComponent implements OnInit, OnDestroy {
   }
 
   delete(person: Person) {
-    this.reduxActions.deletePerson(person.id);
+    this.peopleService.delete(person.id).pipe(
+      mergeMap(() => this.peopleService.fetch())
+    )
+    .subscribe(people => this.people = people);
   }
 
   add(person: Person) {
     this.peopleService.create(person)
         .pipe(mergeMap(() => this.peopleService.fetch()))
-        .subscribe((people: any[]) => {
+        .subscribe(people => {
           this.people = people;
           this.hideDialog();
         });
