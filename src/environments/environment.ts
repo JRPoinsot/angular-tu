@@ -14,7 +14,5 @@ export const environment = {
       person: '/api/person/:id',
       randomPerson: '/api/people/random'
     }
-  },
-  enableReduxLogger: false,
-  enableReduxDevtoolsExtension: false
+  }
 };
